@@ -1,0 +1,130 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# capcarb
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of capcarb is to ...
+
+## Installation
+
+Install from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("creds2/capcarb")
+```
+
+```{r example, message=FALSE, warning=FALSE}
+library(capcarb)
+library(dplyr)
+library(tmap)
+tmap_mode("view")
+```
+
+## Generating input data
+
+There was no readily available boundary data for the TfN region, so it was constructed as follows, using open data from the Propensity to Cycle Tool (PCT):
+
+```{r}
+regions = pct::pct_regions
+mapview::mapview(regions)
+tfn_zone_text = "manc|yorks|lanc|chesh|liv|north-e|north-y|cumbria|humb"
+regions_tfn = regions[grepl(pattern = tfn_zone_text, ignore.case = TRUE, x = regions$region_name), ]
+mapview::mapview(regions_tfn)
+tfn_region = sf::st_union(regions_tfn)
+plot(tfn_region, lwd = 4)
+plot(regions, add = TRUE, border = "grey", col = "NA")
+tfn_region_27700 = sf::st_transform(tfn_region, 27700)
+```
+
+
+Motorway data was accessed as follows (after pre-cleaning Ordnance Survey data):
+
+```{r, eval=FALSE}
+roads_uk = readRDS("Download_mastermap-roads-2019_1483661.Rds")
+names(roads_uk)
+```
+
+```
+ [1] "gml_id"                                            "identifier"                                       
+ [3] "beginLifespanVersion"                              "localId"                                          
+ [5] "namespace"                                         "fictitious"                                       
+ [7] "validFrom"                                         "reasonForChange"                                  
+ [9] "roadClassification"                                "routeHierarchy"                                   
+[11] "formOfWay"                                         "trunkRoad"                                        
+[13] "primaryRoute"                                      "roadClassificationNumber"                         
+[15] "operationalState"                                  "provenance"                                       
+[17] "length"                                            "length_uom"                                       
+[19] "matchStatus"                                       "startGradeSeparation"                             
+[21] "endGradeSeparation"                                "averageWidth"                                     
+[23] "averageWidth_uom"                                  "minimumWidth"                                     
+[25] "minimumWidth_uom"                                  "confidenceLevel"                                  
+[27] "inDirection"                                       "inDirection_uom"                                  
+[29] "inOppositeDirection"                               "inOppositeDirection_uom"                          
+[31] "cycleFacility"                                     "wholeLink"                                        
+[33] "roadStructure"                                     "alternateIdentifier|ThematicIdentifier|identifier"
+[35] "identifierScheme"                                  "roadName"                                         
+[37] "alternateName"                                     "geometry"   
+```
+
+```{r, eval=FALSE}
+table(roads_uk$roadClassification)
+```
+
+```
+               A Road                B Road Classified Unnumbered              Motorway 
+               440770                215962                361711                 16710 
+       Not Classified          Unclassified               Unknown 
+               363169               2150266               1563113 
+```
+
+```{r, eval=FALSE}
+motorways_uk = roads_uk[roads_uk$roadClassification == "Motorway", ]
+motorways_tfn = motorways_uk[regions_tfn_27700, ]
+saveRDS(motorways_tfn, "motorways_tfn.Rds")
+```
+
+```{r, eval=FALSE, echo=FALSE}
+saveRDS(motorways_uk, "motorways_uk.Rds")
+piggyback::pb_upload("motorways_uk.Rds", repo = "itsleeds/boundary-data")
+```
+
+```{r}
+motorways_tfn = readRDS("motorways_tfn.Rds")
+
+tm_shape(tfn_region_27700) + tm_borders() +
+  tm_shape(motorways_tfn) + tm_lines()
+```
+
+There are many variables:
+
+```{r}
+summary(motorways_tfn[1:31])
+```
+
+The data is quite detailed, as shown below:
+
+```{r}
+a58m = motorways_tfn %>% 
+  dplyr::filter(roadClassificationNumber == "A58(M)")
+tm_shape(a58m) + tm_lines("averageWidth", palette = "viridis", lwd = 2)
+```
+
+
+
+

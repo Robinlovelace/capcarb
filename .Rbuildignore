@@ -4,3 +4,4 @@
 ^\.github$
 ^clang-.*
 ^tic\.R$
+^README\.Rmd$
