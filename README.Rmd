@@ -31,7 +31,7 @@ devtools::install_github("creds2/capcarb")
 
 ```{r example, message=FALSE, warning=FALSE}
 library(capcarb)
-library(dplyr)
+library(tidyverse)
 library(tmap)
 tmap_mode("view")
 ```
@@ -102,7 +102,42 @@ saveRDS(motorways_tfn, "motorways_tfn.Rds")
 ```{r, eval=FALSE, echo=FALSE}
 saveRDS(motorways_uk, "motorways_uk.Rds")
 piggyback::pb_upload("motorways_uk.Rds", repo = "itsleeds/boundary-data")
+roads_leeds = roads_uk[sf::st_transform(ukboundaries::leeds, 27700), ]
+system.time(sf::write_sf(roads_leeds, "roads_leeds.gpkg")) # 20 seconds
+system.time(saveRDS(roads_leeds, "roads_leeds.RDS"))      # 7 seconds, 3 times faster
 ```
+
+## Roads in Leeds
+
+```{r}
+roads_leeds = readRDS("roads_leeds.RDS")
+aggregate(roads_leeds$length, by = list(roads_leeds$roadClassification), sum)
+roads_leeds %>% 
+  sf::st_drop_geometry() %>% 
+  group_by(roadClassification) %>% 
+  summarise(length_km = sum(length) / 1000) %>% 
+  ggplot() +
+  geom_bar(aes(roadClassification, length_km), stat = "identity")
+```
+
+```{r, eval=FALSE, echo=FALSE}
+roads_leeds = readRDS("roads_leeds.RDS")
+system.time(plot(roads_leeds["roadClassification"], key.pos = 1))
+tmap_mode("plot")
+system.time({
+  tm_shape(roads_leeds) +
+    tm_lines("roadClassification")
+  
+})
+tmap_mode("view")
+```
+
+![](https://user-images.githubusercontent.com/1825120/77522859-d498b880-6e7c-11ea-811b-a5b06e280da6.png)
+
+
+
+
+## Motorways in the TfN region
 
 ```{r}
 motorways_tfn = readRDS("motorways_tfn.Rds")

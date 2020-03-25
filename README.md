@@ -20,7 +20,7 @@ devtools::install_github("creds2/capcarb")
 
 ``` r
 library(capcarb)
-library(dplyr)
+library(tidyverse)
 library(tmap)
 tmap_mode("view")
 ```
@@ -107,6 +107,33 @@ motorways_tfn = motorways_uk[regions_tfn_27700, ]
 saveRDS(motorways_tfn, "motorways_tfn.Rds")
 ```
 
+## Roads in Leeds
+
+``` r
+roads_leeds = readRDS("roads_leeds.RDS")
+aggregate(roads_leeds$length, by = list(roads_leeds$roadClassification), sum)
+#>                 Group.1          x
+#> 1                A Road  413116.75
+#> 2                B Road   85369.64
+#> 3 Classified Unnumbered  178685.63
+#> 4              Motorway  202262.91
+#> 5        Not Classified  283781.92
+#> 6          Unclassified 2339655.83
+#> 7               Unknown  613394.89
+roads_leeds %>% 
+  sf::st_drop_geometry() %>% 
+  group_by(roadClassification) %>% 
+  summarise(length_km = sum(length) / 1000) %>% 
+  ggplot() +
+  geom_bar(aes(roadClassification, length_km), stat = "identity")
+```
+
+<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
+
+![](https://user-images.githubusercontent.com/1825120/77522859-d498b880-6e7c-11ea-811b-a5b06e280da6.png)
+
+## Motorways in the TfN region
+
 ``` r
 motorways_tfn = readRDS("motorways_tfn.Rds")
 
@@ -115,7 +142,7 @@ tm_shape(tfn_region_27700) + tm_borders() +
 #> Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 7.0.0
 ```
 
-<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
 
 There are many variables:
 
@@ -227,4 +254,4 @@ a58m = motorways_tfn %>%
 tm_shape(a58m) + tm_lines("averageWidth", palette = "viridis", lwd = 2)
 ```
 
-<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" />
