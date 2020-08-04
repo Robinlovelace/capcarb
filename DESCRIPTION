@@ -14,3 +14,7 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 Suggests: 
     covr
+Imports: 
+    sf,
+    pct
+RoxygenNote: 7.1.1
