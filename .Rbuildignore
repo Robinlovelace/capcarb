@@ -5,3 +5,4 @@
 ^clang-.*
 ^tic\.R$
 ^README\.Rmd$
+^codecov\.yml$
