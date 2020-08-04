@@ -63,8 +63,8 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#capcarb" class="anchor"></a>capcarb</h1></div>
 <!-- badges: start -->
-<!-- badges: end -->
-<p>The goal of capcarb is to …</p>
+
+<p>The goal of capcarb is to provide a home for reproducible analysis and open data for the analysis of embodied carbon, known as capital carbon or <a href="https://www.researchgate.net/figure/UK-operational-carbon-OpCarb-and-embodied-carbon-or-capital-carbon-CapCarb-for_fig3_336440806">CapCarb</a>, associated with transport systems.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -81,21 +81,18 @@
 <a href="#generating-input-data" class="anchor"></a>Generating input data</h2>
 <p>There was no readily available boundary data for the TfN region, so it was constructed as follows, using open data from the Propensity to Cycle Tool (PCT):</p>
 <div class="sourceCode" id="cb3"><pre class="r"><span class="no">regions</span> <span class="kw">=</span> <span class="kw pkg">pct</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/pkg/pct/man/pct_regions.html">pct_regions</a></span>
-<span class="kw pkg">mapview</span><span class="kw ns">::</span><span class="fu">mapview</span>(<span class="no">regions</span>)
-<span class="co">#&gt; Warning: st_crs&lt;- : replacing crs does not reproject data; use st_transform for</span>
-<span class="co">#&gt; that</span></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-2-1.png" width="100%"></p>
-<div class="sourceCode" id="cb4"><pre class="r"><span class="no">tfn_zone_text</span> <span class="kw">=</span> <span class="st">"manc|yorks|lanc|chesh|liv|north-e|north-y|cumbria|humb"</span>
+<span class="co"># mapview::mapview(regions)</span>
+<span class="no">tfn_zone_text</span> <span class="kw">=</span> <span class="st">"manc|yorks|lanc|chesh|liv|north-e|north-y|cumbria|humb"</span>
 <span class="no">regions_tfn</span> <span class="kw">=</span> <span class="no">regions</span>[<span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span>(<span class="kw">pattern</span> <span class="kw">=</span> <span class="no">tfn_zone_text</span>, <span class="kw">ignore.case</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">x</span> <span class="kw">=</span> <span class="no">regions</span>$<span class="no">region_name</span>), ]
-<span class="kw pkg">mapview</span><span class="kw ns">::</span><span class="fu">mapview</span>(<span class="no">regions_tfn</span>)</pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-2-2.png" width="100%"></p>
-<div class="sourceCode" id="cb5"><pre class="r"><span class="no">tfn_region</span> <span class="kw">=</span> <span class="kw pkg">sf</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/geos_combine.html">st_union</a></span>(<span class="no">regions_tfn</span>)
+<span class="co"># mapview::mapview(regions_tfn)</span>
+<span class="no">tfn_region</span> <span class="kw">=</span> <span class="kw pkg">sf</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/geos_combine.html">st_union</a></span>(<span class="no">regions_tfn</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">tfn_region</span>, <span class="kw">lwd</span> <span class="kw">=</span> <span class="fl">4</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">regions</span>, <span class="kw">add</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">border</span> <span class="kw">=</span> <span class="st">"grey"</span>, <span class="kw">col</span> <span class="kw">=</span> <span class="st">"NA"</span>)</pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-2-3.png" width="100%"></p>
-<div class="sourceCode" id="cb6"><pre class="r"><span class="no">tfn_region_27700</span> <span class="kw">=</span> <span class="kw pkg">sf</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_transform.html">st_transform</a></span>(<span class="no">tfn_region</span>, <span class="fl">27700</span>)</pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-2-1.png" width="100%"></p>
+<div class="sourceCode" id="cb4"><pre class="r"><span class="no">tfn_region_27700</span> <span class="kw">=</span> <span class="kw pkg">sf</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_transform.html">st_transform</a></span>(<span class="no">tfn_region</span>, <span class="fl">27700</span>)</pre></div>
+<p><img src="https://user-images.githubusercontent.com/1825120/89289269-d9e9e900-d64e-11ea-85a6-e6d140407255.png"></p>
 <p>Motorway data was accessed as follows (after pre-cleaning Ordnance Survey data):</p>
-<div class="sourceCode" id="cb7"><pre class="r"><span class="no">roads_uk</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span>(<span class="st">"Download_mastermap-roads-2019_1483661.Rds"</span>)
+<div class="sourceCode" id="cb5"><pre class="r"><span class="no">roads_uk</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span>(<span class="st">"~/hd/data/os/Download_mastermap-roads-2019_1483661.Rds"</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="no">roads_uk</span>)</pre></div>
 <pre><code> [1] "gml_id"                                            "identifier"                                       
  [3] "beginLifespanVersion"                              "localId"                                          
@@ -116,19 +113,19 @@
 [33] "roadStructure"                                     "alternateIdentifier|ThematicIdentifier|identifier"
 [35] "identifierScheme"                                  "roadName"                                         
 [37] "alternateName"                                     "geometry"   </code></pre>
-<div class="sourceCode" id="cb9"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span>(<span class="no">roads_uk</span>$<span class="no">roadClassification</span>)</pre></div>
+<div class="sourceCode" id="cb7"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span>(<span class="no">roads_uk</span>$<span class="no">roadClassification</span>)</pre></div>
 <pre><code>               A Road                B Road Classified Unnumbered              Motorway 
                440770                215962                361711                 16710 
        Not Classified          Unclassified               Unknown 
                363169               2150266               1563113 </code></pre>
-<div class="sourceCode" id="cb11"><pre class="r"><span class="no">motorways_uk</span> <span class="kw">=</span> <span class="no">roads_uk</span>[<span class="no">roads_uk</span>$<span class="no">roadClassification</span> <span class="kw">==</span> <span class="st">"Motorway"</span>, ]
-<span class="no">motorways_tfn</span> <span class="kw">=</span> <span class="no">motorways_uk</span>[<span class="no">regions_tfn_27700</span>, ]
+<div class="sourceCode" id="cb9"><pre class="r"><span class="no">motorways_uk</span> <span class="kw">=</span> <span class="no">roads_uk</span>[<span class="no">roads_uk</span>$<span class="no">roadClassification</span> <span class="kw">==</span> <span class="st">"Motorway"</span>, ]
+<span class="no">motorways_tfn</span> <span class="kw">=</span> <span class="no">motorways_uk</span>[<span class="no">tfn_region_27700</span>, ]
 <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">saveRDS</a></span>(<span class="no">motorways_tfn</span>, <span class="st">"motorways_tfn.Rds"</span>)</pre></div>
 </div>
 <div id="roads-in-leeds" class="section level2">
 <h2 class="hasAnchor">
 <a href="#roads-in-leeds" class="anchor"></a>Roads in Leeds</h2>
-<div class="sourceCode" id="cb12"><pre class="r"><span class="no">roads_leeds</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span>(<span class="st">"roads_leeds.RDS"</span>)
+<div class="sourceCode" id="cb10"><pre class="r"><span class="no">roads_leeds</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span>(<span class="st">"roads_leeds.RDS"</span>)
 <span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html">aggregate</a></span>(<span class="no">roads_leeds</span>$<span class="no">length</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">roads_leeds</span>$<span class="no">roadClassification</span>), <span class="no">sum</span>)
 <span class="co">#&gt;                 Group.1          x</span>
 <span class="co">#&gt; 1                A Road  413116.75</span>
@@ -143,21 +140,22 @@
   <span class="fu">group_by</span>(<span class="no">roadClassification</span>) <span class="kw">%&gt;%</span>
   <span class="fu">summarise</span>(<span class="kw">length_km</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="no">length</span>) / <span class="fl">1000</span>) <span class="kw">%&gt;%</span>
   <span class="fu">ggplot</span>() +
-  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="no">roadClassification</span>, <span class="no">length_km</span>), <span class="kw">stat</span> <span class="kw">=</span> <span class="st">"identity"</span>)</pre></div>
+  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="no">roadClassification</span>, <span class="no">length_km</span>), <span class="kw">stat</span> <span class="kw">=</span> <span class="st">"identity"</span>)
+<span class="co">#&gt; `summarise()` ungrouping output (override with `.groups` argument)</span></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-7-1.png" width="100%"></p>
 <p><img src="https://user-images.githubusercontent.com/1825120/77522859-d498b880-6e7c-11ea-811b-a5b06e280da6.png"></p>
 </div>
 <div id="motorways-in-the-tfn-region" class="section level2">
 <h2 class="hasAnchor">
 <a href="#motorways-in-the-tfn-region" class="anchor"></a>Motorways in the TfN region</h2>
-<div class="sourceCode" id="cb13"><pre class="r"><span class="no">motorways_tfn</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span>(<span class="st">"motorways_tfn.Rds"</span>)
+<div class="sourceCode" id="cb11"><pre class="r"><span class="no">motorways_tfn</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span>(<span class="st">"motorways_tfn.Rds"</span>)
 
 <span class="fu">tm_shape</span>(<span class="no">tfn_region_27700</span>) + <span class="fu">tm_borders</span>() +
   <span class="fu">tm_shape</span>(<span class="no">motorways_tfn</span>) + <span class="fu">tm_lines</span>()
 <span class="co">#&gt; Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 7.0.0</span></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-9-1.png" width="100%"></p>
 <p>There are many variables:</p>
-<div class="sourceCode" id="cb14"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">motorways_tfn</span>[<span class="fl">1</span>:<span class="fl">31</span>])
+<div class="sourceCode" id="cb12"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">motorways_tfn</span>[<span class="fl">1</span>:<span class="fl">31</span>])
 <span class="co">#&gt;                   gml_id                                     identifier  </span>
 <span class="co">#&gt;  osgb4000000007758661:   1   http://data.os.uk/id/4000000007758661:   1  </span>
 <span class="co">#&gt;  osgb4000000010837181:   1   http://data.os.uk/id/4000000010837181:   1  </span>
@@ -255,7 +253,7 @@
 <span class="co">#&gt;                                                                    </span>
 <span class="co">#&gt; </span></pre></div>
 <p>The data is quite detailed, as shown below:</p>
-<div class="sourceCode" id="cb15"><pre class="r"><span class="no">a58m</span> <span class="kw">=</span> <span class="no">motorways_tfn</span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb13"><pre class="r"><span class="no">a58m</span> <span class="kw">=</span> <span class="no">motorways_tfn</span> <span class="kw">%&gt;%</span>
   <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">roadClassificationNumber</span> <span class="kw">==</span> <span class="st">"A58(M)"</span>)
 <span class="fu">tm_shape</span>(<span class="no">a58m</span>) + <span class="fu">tm_lines</span>(<span class="st">"averageWidth"</span>, <span class="kw">palette</span> <span class="kw">=</span> <span class="st">"viridis"</span>, <span class="kw">lwd</span> <span class="kw">=</span> <span class="fl">2</span>)</pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-11-1.png" width="100%"></p>
@@ -278,7 +276,14 @@
 </ul>
 </div>
 
-  </div>
+  <div class="dev-status">
+<h2>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/creds2/capcarb/actions"><img src="https://github.com/creds2/capcarb/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+<li><a href="https://codecov.io/gh/creds2/capcarb?branch=master"><img src="https://codecov.io/gh/creds2/capcarb/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
+</ul>
+</div>
+</div>
 </div>
 
 
