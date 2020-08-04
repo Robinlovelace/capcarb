@@ -6,3 +6,4 @@
 ^tic\.R$
 ^README\.Rmd$
 ^codecov\.yml$
+^LICENSE\.md$
