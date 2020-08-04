@@ -80,7 +80,7 @@
 <h2 class="hasAnchor">
 <a href="#generating-input-data" class="anchor"></a>Generating input data</h2>
 <p>There was no readily available boundary data for the TfN region, so it was constructed as follows, using open data from the Propensity to Cycle Tool (PCT):</p>
-<div class="sourceCode" id="cb3"><pre class="r"><span class="no">regions</span> <span class="kw">=</span> <span class="kw pkg">pct</span><span class="kw ns">::</span><span class="no">pct_regions</span>
+<div class="sourceCode" id="cb3"><pre class="r"><span class="no">regions</span> <span class="kw">=</span> <span class="kw pkg">pct</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/pkg/pct/man/pct_regions.html">pct_regions</a></span>
 <span class="kw pkg">mapview</span><span class="kw ns">::</span><span class="fu">mapview</span>(<span class="no">regions</span>)
 <span class="co">#&gt; Warning: st_crs&lt;- : replacing crs does not reproject data; use st_transform for</span>
 <span class="co">#&gt; that</span></pre></div>
@@ -89,11 +89,11 @@
 <span class="no">regions_tfn</span> <span class="kw">=</span> <span class="no">regions</span>[<span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span>(<span class="kw">pattern</span> <span class="kw">=</span> <span class="no">tfn_zone_text</span>, <span class="kw">ignore.case</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">x</span> <span class="kw">=</span> <span class="no">regions</span>$<span class="no">region_name</span>), ]
 <span class="kw pkg">mapview</span><span class="kw ns">::</span><span class="fu">mapview</span>(<span class="no">regions_tfn</span>)</pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-2-2.png" width="100%"></p>
-<div class="sourceCode" id="cb5"><pre class="r"><span class="no">tfn_region</span> <span class="kw">=</span> <span class="kw pkg">sf</span><span class="kw ns">::</span><span class="fu">st_union</span>(<span class="no">regions_tfn</span>)
+<div class="sourceCode" id="cb5"><pre class="r"><span class="no">tfn_region</span> <span class="kw">=</span> <span class="kw pkg">sf</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/geos_combine.html">st_union</a></span>(<span class="no">regions_tfn</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">tfn_region</span>, <span class="kw">lwd</span> <span class="kw">=</span> <span class="fl">4</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">regions</span>, <span class="kw">add</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">border</span> <span class="kw">=</span> <span class="st">"grey"</span>, <span class="kw">col</span> <span class="kw">=</span> <span class="st">"NA"</span>)</pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-2-3.png" width="100%"></p>
-<div class="sourceCode" id="cb6"><pre class="r"><span class="no">tfn_region_27700</span> <span class="kw">=</span> <span class="kw pkg">sf</span><span class="kw ns">::</span><span class="fu">st_transform</span>(<span class="no">tfn_region</span>, <span class="fl">27700</span>)</pre></div>
+<div class="sourceCode" id="cb6"><pre class="r"><span class="no">tfn_region_27700</span> <span class="kw">=</span> <span class="kw pkg">sf</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_transform.html">st_transform</a></span>(<span class="no">tfn_region</span>, <span class="fl">27700</span>)</pre></div>
 <p>Motorway data was accessed as follows (after pre-cleaning Ordnance Survey data):</p>
 <div class="sourceCode" id="cb7"><pre class="r"><span class="no">roads_uk</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span>(<span class="st">"Download_mastermap-roads-2019_1483661.Rds"</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="no">roads_uk</span>)</pre></div>
@@ -139,7 +139,7 @@
 <span class="co">#&gt; 6          Unclassified 2339655.83</span>
 <span class="co">#&gt; 7               Unknown  613394.89</span>
 <span class="no">roads_leeds</span> <span class="kw">%&gt;%</span>
-  <span class="kw pkg">sf</span><span class="kw ns">::</span><span class="fu">st_drop_geometry</span>() <span class="kw">%&gt;%</span>
+  <span class="kw pkg">sf</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_geometry.html">st_drop_geometry</a></span>() <span class="kw">%&gt;%</span>
   <span class="fu">group_by</span>(<span class="no">roadClassification</span>) <span class="kw">%&gt;%</span>
   <span class="fu">summarise</span>(<span class="kw">length_km</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="no">length</span>) / <span class="fl">1000</span>) <span class="kw">%&gt;%</span>
   <span class="fu">ggplot</span>() +
@@ -256,7 +256,7 @@
 <span class="co">#&gt; </span></pre></div>
 <p>The data is quite detailed, as shown below:</p>
 <div class="sourceCode" id="cb15"><pre class="r"><span class="no">a58m</span> <span class="kw">=</span> <span class="no">motorways_tfn</span> <span class="kw">%&gt;%</span>
-  <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu">filter</span>(<span class="no">roadClassificationNumber</span> <span class="kw">==</span> <span class="st">"A58(M)"</span>)
+  <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">roadClassificationNumber</span> <span class="kw">==</span> <span class="st">"A58(M)"</span>)
 <span class="fu">tm_shape</span>(<span class="no">a58m</span>) + <span class="fu">tm_lines</span>(<span class="st">"averageWidth"</span>, <span class="kw">palette</span> <span class="kw">=</span> <span class="st">"viridis"</span>, <span class="kw">lwd</span> <span class="kw">=</span> <span class="fl">2</span>)</pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-11-1.png" width="100%"></p>
 </div>
