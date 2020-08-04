@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 # capcarb
 
 <!-- badges: start -->
+[![R build status](https://github.com/creds2/capcarb/workflows/R-CMD-check/badge.svg)](https://github.com/creds2/capcarb/actions)
 <!-- badges: end -->
 
 The goal of capcarb is to ...
