@@ -5,9 +5,17 @@
 
 <!-- badges: start -->
 
+[![R build
+status](https://github.com/creds2/capcarb/workflows/R-CMD-check/badge.svg)](https://github.com/creds2/capcarb/actions)
+[![Codecov test
+coverage](https://codecov.io/gh/creds2/capcarb/branch/master/graph/badge.svg)](https://codecov.io/gh/creds2/capcarb?branch=master)
 <!-- badges: end -->
 
-The goal of capcarb is to …
+The goal of capcarb is to provide a home for reproducible analysis and
+open data for the analysis of embodied carbon, known as capital carbon
+or
+[CapCarb](https://www.researchgate.net/figure/UK-operational-carbon-OpCarb-and-embodied-carbon-or-capital-carbon-CapCarb-for_fig3_336440806),
+associated with transport systems.
 
 ## Installation
 
@@ -33,38 +41,28 @@ Tool (PCT):
 
 ``` r
 regions = pct::pct_regions
-mapview::mapview(regions)
-#> Warning: st_crs<- : replacing crs does not reproject data; use st_transform for
-#> that
-```
-
-<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
-
-``` r
+# mapview::mapview(regions)
 tfn_zone_text = "manc|yorks|lanc|chesh|liv|north-e|north-y|cumbria|humb"
 regions_tfn = regions[grepl(pattern = tfn_zone_text, ignore.case = TRUE, x = regions$region_name), ]
-mapview::mapview(regions_tfn)
-```
-
-<img src="man/figures/README-unnamed-chunk-2-2.png" width="100%" />
-
-``` r
+# mapview::mapview(regions_tfn)
 tfn_region = sf::st_union(regions_tfn)
 plot(tfn_region, lwd = 4)
 plot(regions, add = TRUE, border = "grey", col = "NA")
 ```
 
-<img src="man/figures/README-unnamed-chunk-2-3.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
 
 ``` r
 tfn_region_27700 = sf::st_transform(tfn_region, 27700)
 ```
 
+![](https://user-images.githubusercontent.com/1825120/89289269-d9e9e900-d64e-11ea-85a6-e6d140407255.png)
+
 Motorway data was accessed as follows (after pre-cleaning Ordnance
 Survey data):
 
 ``` r
-roads_uk = readRDS("Download_mastermap-roads-2019_1483661.Rds")
+roads_uk = readRDS("~/hd/data/os/Download_mastermap-roads-2019_1483661.Rds")
 names(roads_uk)
 ```
 
@@ -103,7 +101,7 @@ table(roads_uk$roadClassification)
 
 ``` r
 motorways_uk = roads_uk[roads_uk$roadClassification == "Motorway", ]
-motorways_tfn = motorways_uk[regions_tfn_27700, ]
+motorways_tfn = motorways_uk[tfn_region_27700, ]
 saveRDS(motorways_tfn, "motorways_tfn.Rds")
 ```
 
@@ -126,6 +124,7 @@ roads_leeds %>%
   summarise(length_km = sum(length) / 1000) %>% 
   ggplot() +
   geom_bar(aes(roadClassification, length_km), stat = "identity")
+#> `summarise()` ungrouping output (override with `.groups` argument)
 ```
 
 <img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />

@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/creds2/capcarb/branch/master/graph/badge.svg)](https://codecov.io/gh/creds2/capcarb?branch=master)
 <!-- badges: end -->
 
-The goal of capcarb is to ...
+The goal of capcarb is to provide a home for reproducible analysis and open data for the analysis of embodied carbon, known as capital carbon or [CapCarb](https://www.researchgate.net/figure/UK-operational-carbon-OpCarb-and-embodied-carbon-or-capital-carbon-CapCarb-for_fig3_336440806), associated with transport systems.
 
 ## Installation
 
@@ -44,21 +44,23 @@ There was no readily available boundary data for the TfN region, so it was const
 
 ```{r}
 regions = pct::pct_regions
-mapview::mapview(regions)
+# mapview::mapview(regions)
 tfn_zone_text = "manc|yorks|lanc|chesh|liv|north-e|north-y|cumbria|humb"
 regions_tfn = regions[grepl(pattern = tfn_zone_text, ignore.case = TRUE, x = regions$region_name), ]
-mapview::mapview(regions_tfn)
+# mapview::mapview(regions_tfn)
 tfn_region = sf::st_union(regions_tfn)
 plot(tfn_region, lwd = 4)
 plot(regions, add = TRUE, border = "grey", col = "NA")
 tfn_region_27700 = sf::st_transform(tfn_region, 27700)
 ```
 
+![](https://user-images.githubusercontent.com/1825120/89289269-d9e9e900-d64e-11ea-85a6-e6d140407255.png)
+
 
 Motorway data was accessed as follows (after pre-cleaning Ordnance Survey data):
 
 ```{r, eval=FALSE}
-roads_uk = readRDS("Download_mastermap-roads-2019_1483661.Rds")
+roads_uk = readRDS("~/hd/data/os/Download_mastermap-roads-2019_1483661.Rds")
 names(roads_uk)
 ```
 
@@ -97,13 +99,11 @@ table(roads_uk$roadClassification)
 
 ```{r, eval=FALSE}
 motorways_uk = roads_uk[roads_uk$roadClassification == "Motorway", ]
-motorways_tfn = motorways_uk[regions_tfn_27700, ]
+motorways_tfn = motorways_uk[tfn_region_27700, ]
 saveRDS(motorways_tfn, "motorways_tfn.Rds")
 ```
 
 ```{r, eval=FALSE, echo=FALSE}
-saveRDS(motorways_uk, "motorways_uk.Rds")
-piggyback::pb_upload("motorways_uk.Rds", repo = "itsleeds/boundary-data")
 roads_leeds = roads_uk[sf::st_transform(ukboundaries::leeds, 27700), ]
 system.time(sf::write_sf(roads_leeds, "roads_leeds.gpkg")) # 20 seconds
 system.time(saveRDS(roads_leeds, "roads_leeds.RDS"))      # 7 seconds, 3 times faster
