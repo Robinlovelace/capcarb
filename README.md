@@ -7,8 +7,6 @@
 
 [![R build
 status](https://github.com/creds2/capcarb/workflows/R-CMD-check/badge.svg)](https://github.com/creds2/capcarb/actions)
-[![Codecov test
-coverage](https://codecov.io/gh/creds2/capcarb/branch/master/graph/badge.svg)](https://codecov.io/gh/creds2/capcarb?branch=master)
 <!-- badges: end -->
 
 The goal of capcarb is to provide a home for reproducible analysis and
@@ -143,107 +141,7 @@ tm_shape(tfn_region_27700) + tm_borders() +
 
 <img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
 
-There are many variables:
-
-``` r
-summary(motorways_tfn[1:31])
-#>                   gml_id                                     identifier  
-#>  osgb4000000007758661:   1   http://data.os.uk/id/4000000007758661:   1  
-#>  osgb4000000010837181:   1   http://data.os.uk/id/4000000010837181:   1  
-#>  osgb5000005109118625:   1   http://data.os.uk/id/5000005109118625:   1  
-#>  osgb4000000010837148:   1   http://data.os.uk/id/4000000010837148:   1  
-#>  osgb4000000010840125:   1   http://data.os.uk/id/4000000010840125:   1  
-#>  osgb4000000013246084:   1   http://data.os.uk/id/4000000013246084:   1  
-#>  (Other)             :5741   (Other)                              :5741  
-#>               beginLifespanVersion    localId         
-#>  2017-10-19T00:00:00.000:2939      Min.   :4.000e+15  
-#>  2018-01-20T00:00:00.000: 447      1st Qu.:4.000e+15  
-#>  2018-03-17T00:00:00.000: 299      Median :4.000e+15  
-#>  2018-11-18T00:00:00.000: 223      Mean   :4.077e+15  
-#>  2019-10-20T00:00:00.000: 139      3rd Qu.:4.000e+15  
-#>  2019-05-20T00:00:00.000: 130      Max.   :5.000e+15  
-#>  (Other)                :1570                         
-#>               namespace    fictitious      validFrom  
-#>  http://data.os.uk/:5747   Mode :logical   NA's:5747  
-#>                            FALSE:5747                 
-#>                                                       
-#>                                                       
-#>                                                       
-#>                                                       
-#>                                                       
-#>                          reasonForChange             roadClassification
-#>  Modified Geometry And Attributes: 693   A Road               :   0    
-#>  New                             : 137   B Road               :   0    
-#>  Modified Attributes             :4842   Classified Unnumbered:   0    
-#>  Modified Geometry               :  75   Motorway             :5747    
-#>                                          Not Classified       :   0    
-#>                                          Unclassified         :   0    
-#>                                          Unknown              :   0    
-#>            routeHierarchy                           formOfWay   
-#>  Motorway         :5747   Dual Carriageway               :4109  
-#>  A Road           :   0   Slip Road                      :1464  
-#>  A Road Primary   :   0   Roundabout                     : 144  
-#>  B Road           :   0   Traffic Island Link At Junction:  21  
-#>  Local Access Road:   0   Single Carriageway             :   9  
-#>  Local Road       :   0   Enclosed Traffic Area          :   0  
-#>  (Other)          :   0   (Other)                        :   0  
-#>  trunkRoad       primaryRoute    roadClassificationNumber
-#>  Mode :logical   Mode :logical   M6     : 934            
-#>  FALSE:460       FALSE:365       M62    : 756            
-#>  TRUE :5287      TRUE :5382      A1(M)  : 631            
-#>                                  M60    : 626            
-#>                                  M1     : 365            
-#>                                  M56    : 332            
-#>                                  (Other):2103            
-#>            operationalState                                  provenance  
-#>  Open              :5747    OS Rural And Interpolated OS Height   :2666  
-#>  Under Construction:   0    OS Urban And Interpolated OS Height   :1663  
-#>  Permanently Closed:   0    OS Urban And OS Height                : 701  
-#>                             OS Rural And OS Height                : 638  
-#>                             OS Urban And Low Confidence OS Height :  40  
-#>                             OS Moorland And Interpolated OS Height:  21  
-#>                             (Other)                               :  18  
-#>      length        length_uom                             matchStatus  
-#>  Min.   :   1.88   m:5747     Matched                           :5714  
-#>  1st Qu.: 113.59              Matched With Attribute Discrepancy:  12  
-#>  Median : 318.65              No Match                          :  21  
-#>  Mean   : 456.66              Not Matched Awaiting Review       :   0  
-#>  3rd Qu.: 577.70                                                       
-#>  Max.   :4400.26                                                       
-#>                                                                        
-#>  startGradeSeparation endGradeSeparation  averageWidth   averageWidth_uom
-#>  Min.   :0.0000       Min.   :0.0000     Min.   : 6.20   m   :5650       
-#>  1st Qu.:0.0000       1st Qu.:0.0000     1st Qu.:12.30   NA's:  97       
-#>  Median :0.0000       Median :0.0000     Median :14.80                   
-#>  Mean   :0.2286       Mean   :0.2269     Mean   :15.05                   
-#>  3rd Qu.:0.0000       3rd Qu.:0.0000     3rd Qu.:17.00                   
-#>  Max.   :1.0000       Max.   :1.0000     Max.   :46.20                   
-#>                                          NA's   :97                      
-#>   minimumWidth   minimumWidth_uom                    confidenceLevel
-#>  Min.   : 4.00   m   :4888        OS Moorland And Full Extent:  28  
-#>  1st Qu.: 7.60   NA's: 859        OS Rural And Full Extent   :1869  
-#>  Median : 9.20                    OS Rural And Part Extent   :1411  
-#>  Mean   :10.25                    OS Urban And Full Extent   :1223  
-#>  3rd Qu.:12.03                    OS Urban And Part Extent   :1111  
-#>  Max.   :45.70                    OS Moorland And Part Extent:   8  
-#>  NA's   :859                      NA's                       :  97  
-#>   inDirection      inDirection_uom inOppositeDirection inOppositeDirection_uom
-#>  Min.   :  0.000   m:5747          Min.   : 0.000      m:5747                 
-#>  1st Qu.:  0.000                   1st Qu.: 0.000                             
-#>  Median :  0.900                   Median : 0.800                             
-#>  Mean   :  3.141                   Mean   : 2.948                             
-#>  3rd Qu.:  3.600                   3rd Qu.: 3.700                             
-#>  Max.   :151.900                   Max.   :94.300                             
-#>                                                                               
-#>                                 cycleFacility           geometry   
-#>  Unknown Type Of Cycle Route Along Road:   0   LINESTRING Z :5747  
-#>  NA's                                  :5747   epsg:27700   :   0  
-#>                                                +proj=tmer...:   0  
-#>                                                                    
-#>                                                                    
-#>                                                                    
-#> 
-```
+<!-- There are many variables: -->
 
 The data is quite detailed, as shown below:
 
