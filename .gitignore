@@ -3,3 +3,5 @@ docs/
 *.Rds
 *.RDS
 *.gpkg*
+inst/doc
+.Rhistory
