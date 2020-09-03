@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">capcarb</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
       </span>
     </div>
 
@@ -155,106 +155,9 @@
   <span class="fu">tm_shape</span>(<span class="no">motorways_tfn</span>) + <span class="fu">tm_lines</span>()
 <span class="co">#&gt; Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 7.0.0</span></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-9-1.png" width="100%"></p>
-<p>There are many variables:</p>
-<div class="sourceCode" id="cb12"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">motorways_tfn</span>[<span class="fl">1</span>:<span class="fl">31</span>])
-<span class="co">#&gt;                   gml_id                                     identifier  </span>
-<span class="co">#&gt;  osgb4000000007758661:   1   http://data.os.uk/id/4000000007758661:   1  </span>
-<span class="co">#&gt;  osgb4000000010837181:   1   http://data.os.uk/id/4000000010837181:   1  </span>
-<span class="co">#&gt;  osgb5000005109118625:   1   http://data.os.uk/id/5000005109118625:   1  </span>
-<span class="co">#&gt;  osgb4000000010837148:   1   http://data.os.uk/id/4000000010837148:   1  </span>
-<span class="co">#&gt;  osgb4000000010840125:   1   http://data.os.uk/id/4000000010840125:   1  </span>
-<span class="co">#&gt;  osgb4000000013246084:   1   http://data.os.uk/id/4000000013246084:   1  </span>
-<span class="co">#&gt;  (Other)             :5741   (Other)                              :5741  </span>
-<span class="co">#&gt;               beginLifespanVersion    localId         </span>
-<span class="co">#&gt;  2017-10-19T00:00:00.000:2939      Min.   :4.000e+15  </span>
-<span class="co">#&gt;  2018-01-20T00:00:00.000: 447      1st Qu.:4.000e+15  </span>
-<span class="co">#&gt;  2018-03-17T00:00:00.000: 299      Median :4.000e+15  </span>
-<span class="co">#&gt;  2018-11-18T00:00:00.000: 223      Mean   :4.077e+15  </span>
-<span class="co">#&gt;  2019-10-20T00:00:00.000: 139      3rd Qu.:4.000e+15  </span>
-<span class="co">#&gt;  2019-05-20T00:00:00.000: 130      Max.   :5.000e+15  </span>
-<span class="co">#&gt;  (Other)                :1570                         </span>
-<span class="co">#&gt;               namespace    fictitious      validFrom  </span>
-<span class="co">#&gt;  http://data.os.uk/:5747   Mode :logical   NA's:5747  </span>
-<span class="co">#&gt;                            FALSE:5747                 </span>
-<span class="co">#&gt;                                                       </span>
-<span class="co">#&gt;                                                       </span>
-<span class="co">#&gt;                                                       </span>
-<span class="co">#&gt;                                                       </span>
-<span class="co">#&gt;                                                       </span>
-<span class="co">#&gt;                          reasonForChange             roadClassification</span>
-<span class="co">#&gt;  Modified Geometry And Attributes: 693   A Road               :   0    </span>
-<span class="co">#&gt;  New                             : 137   B Road               :   0    </span>
-<span class="co">#&gt;  Modified Attributes             :4842   Classified Unnumbered:   0    </span>
-<span class="co">#&gt;  Modified Geometry               :  75   Motorway             :5747    </span>
-<span class="co">#&gt;                                          Not Classified       :   0    </span>
-<span class="co">#&gt;                                          Unclassified         :   0    </span>
-<span class="co">#&gt;                                          Unknown              :   0    </span>
-<span class="co">#&gt;            routeHierarchy                           formOfWay   </span>
-<span class="co">#&gt;  Motorway         :5747   Dual Carriageway               :4109  </span>
-<span class="co">#&gt;  A Road           :   0   Slip Road                      :1464  </span>
-<span class="co">#&gt;  A Road Primary   :   0   Roundabout                     : 144  </span>
-<span class="co">#&gt;  B Road           :   0   Traffic Island Link At Junction:  21  </span>
-<span class="co">#&gt;  Local Access Road:   0   Single Carriageway             :   9  </span>
-<span class="co">#&gt;  Local Road       :   0   Enclosed Traffic Area          :   0  </span>
-<span class="co">#&gt;  (Other)          :   0   (Other)                        :   0  </span>
-<span class="co">#&gt;  trunkRoad       primaryRoute    roadClassificationNumber</span>
-<span class="co">#&gt;  Mode :logical   Mode :logical   M6     : 934            </span>
-<span class="co">#&gt;  FALSE:460       FALSE:365       M62    : 756            </span>
-<span class="co">#&gt;  TRUE :5287      TRUE :5382      A1(M)  : 631            </span>
-<span class="co">#&gt;                                  M60    : 626            </span>
-<span class="co">#&gt;                                  M1     : 365            </span>
-<span class="co">#&gt;                                  M56    : 332            </span>
-<span class="co">#&gt;                                  (Other):2103            </span>
-<span class="co">#&gt;            operationalState                                  provenance  </span>
-<span class="co">#&gt;  Open              :5747    OS Rural And Interpolated OS Height   :2666  </span>
-<span class="co">#&gt;  Under Construction:   0    OS Urban And Interpolated OS Height   :1663  </span>
-<span class="co">#&gt;  Permanently Closed:   0    OS Urban And OS Height                : 701  </span>
-<span class="co">#&gt;                             OS Rural And OS Height                : 638  </span>
-<span class="co">#&gt;                             OS Urban And Low Confidence OS Height :  40  </span>
-<span class="co">#&gt;                             OS Moorland And Interpolated OS Height:  21  </span>
-<span class="co">#&gt;                             (Other)                               :  18  </span>
-<span class="co">#&gt;      length        length_uom                             matchStatus  </span>
-<span class="co">#&gt;  Min.   :   1.88   m:5747     Matched                           :5714  </span>
-<span class="co">#&gt;  1st Qu.: 113.59              Matched With Attribute Discrepancy:  12  </span>
-<span class="co">#&gt;  Median : 318.65              No Match                          :  21  </span>
-<span class="co">#&gt;  Mean   : 456.66              Not Matched Awaiting Review       :   0  </span>
-<span class="co">#&gt;  3rd Qu.: 577.70                                                       </span>
-<span class="co">#&gt;  Max.   :4400.26                                                       </span>
-<span class="co">#&gt;                                                                        </span>
-<span class="co">#&gt;  startGradeSeparation endGradeSeparation  averageWidth   averageWidth_uom</span>
-<span class="co">#&gt;  Min.   :0.0000       Min.   :0.0000     Min.   : 6.20   m   :5650       </span>
-<span class="co">#&gt;  1st Qu.:0.0000       1st Qu.:0.0000     1st Qu.:12.30   NA's:  97       </span>
-<span class="co">#&gt;  Median :0.0000       Median :0.0000     Median :14.80                   </span>
-<span class="co">#&gt;  Mean   :0.2286       Mean   :0.2269     Mean   :15.05                   </span>
-<span class="co">#&gt;  3rd Qu.:0.0000       3rd Qu.:0.0000     3rd Qu.:17.00                   </span>
-<span class="co">#&gt;  Max.   :1.0000       Max.   :1.0000     Max.   :46.20                   </span>
-<span class="co">#&gt;                                          NA's   :97                      </span>
-<span class="co">#&gt;   minimumWidth   minimumWidth_uom                    confidenceLevel</span>
-<span class="co">#&gt;  Min.   : 4.00   m   :4888        OS Moorland And Full Extent:  28  </span>
-<span class="co">#&gt;  1st Qu.: 7.60   NA's: 859        OS Rural And Full Extent   :1869  </span>
-<span class="co">#&gt;  Median : 9.20                    OS Rural And Part Extent   :1411  </span>
-<span class="co">#&gt;  Mean   :10.25                    OS Urban And Full Extent   :1223  </span>
-<span class="co">#&gt;  3rd Qu.:12.03                    OS Urban And Part Extent   :1111  </span>
-<span class="co">#&gt;  Max.   :45.70                    OS Moorland And Part Extent:   8  </span>
-<span class="co">#&gt;  NA's   :859                      NA's                       :  97  </span>
-<span class="co">#&gt;   inDirection      inDirection_uom inOppositeDirection inOppositeDirection_uom</span>
-<span class="co">#&gt;  Min.   :  0.000   m:5747          Min.   : 0.000      m:5747                 </span>
-<span class="co">#&gt;  1st Qu.:  0.000                   1st Qu.: 0.000                             </span>
-<span class="co">#&gt;  Median :  0.900                   Median : 0.800                             </span>
-<span class="co">#&gt;  Mean   :  3.141                   Mean   : 2.948                             </span>
-<span class="co">#&gt;  3rd Qu.:  3.600                   3rd Qu.: 3.700                             </span>
-<span class="co">#&gt;  Max.   :151.900                   Max.   :94.300                             </span>
-<span class="co">#&gt;                                                                               </span>
-<span class="co">#&gt;                                 cycleFacility           geometry   </span>
-<span class="co">#&gt;  Unknown Type Of Cycle Route Along Road:   0   LINESTRING Z :5747  </span>
-<span class="co">#&gt;  NA's                                  :5747   epsg:27700   :   0  </span>
-<span class="co">#&gt;                                                +proj=tmer...:   0  </span>
-<span class="co">#&gt;                                                                    </span>
-<span class="co">#&gt;                                                                    </span>
-<span class="co">#&gt;                                                                    </span>
-<span class="co">#&gt; </span></pre></div>
+<!-- There are many variables: -->
 <p>The data is quite detailed, as shown below:</p>
-<div class="sourceCode" id="cb13"><pre class="r"><span class="no">a58m</span> <span class="kw">=</span> <span class="no">motorways_tfn</span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb12"><pre class="r"><span class="no">a58m</span> <span class="kw">=</span> <span class="no">motorways_tfn</span> <span class="kw">%&gt;%</span>
   <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">roadClassificationNumber</span> <span class="kw">==</span> <span class="st">"A58(M)"</span>)
 <span class="fu">tm_shape</span>(<span class="no">a58m</span>) + <span class="fu">tm_lines</span>(<span class="st">"averageWidth"</span>, <span class="kw">palette</span> <span class="kw">=</span> <span class="st">"viridis"</span>, <span class="kw">lwd</span> <span class="kw">=</span> <span class="fl">2</span>)</pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-11-1.png" width="100%"></p>
@@ -283,7 +186,6 @@
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://github.com/creds2/capcarb/actions"><img src="https://github.com/creds2/capcarb/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
-<li><a href="https://codecov.io/gh/creds2/capcarb?branch=master"><img src="https://codecov.io/gh/creds2/capcarb/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
 </ul>
 </div>
 </div>
