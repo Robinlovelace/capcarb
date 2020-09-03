@@ -9,7 +9,7 @@ Authors@R: c(
     person("Jannik", "Giesekam", email = "J.Giesekam@leeds.ac.uk", role = c("aut"),
       comment = c(ORCID = "0000-0003-2915-1323"))
       )
-Description: What the package does (one paragraph).
+Description: Explore the Capital Carbon ('CapCarb') Costs of Transport Systems
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
